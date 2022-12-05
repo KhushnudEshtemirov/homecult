@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import "./top-menu.scss";
 import { BsInstagram, BsFacebook } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { TfiClose } from "react-icons/tfi";
 
 const TopMenu = () => {
   const [lanEng, setEng] = useState(true);
@@ -26,14 +27,35 @@ const TopMenu = () => {
   };
 
   const [addChange, setChange] = useState(false);
+  const [addColor, setColor] = useState(false);
 
   const showMenu = () => {
     setChange(!addChange);
   };
 
+  const showMenuOther = () => {
+    setChange(!addChange);
+    setColor(false);
+  };
+
+  const showMenuPro = () => {
+    setChange(!addChange);
+    setColor(true);
+  };
+
+  const [showRequest, setShowRequest] = useState(false);
+
+  const showRequestFunc = () => {
+    setShowRequest(!showRequest);
+  };
+
+  const hideRequestFunc = () => {
+    setShowRequest(!showRequest);
+  };
+
   return (
     <div className="top-menu">
-      <div className={`navbar ${addChange ? "color" : ""}`}>
+      <div className={`navbar ${addChange || addColor ? "color" : ""}`}>
         <div className="left-menu">
           <ul>
             <li onClick={showMenu}>
@@ -79,26 +101,58 @@ const TopMenu = () => {
               </div>
             </li>
             <li>
-              <p>DROP REQUEST</p>
+              <p onClick={showRequestFunc}>DROP REQUEST</p>
             </li>
           </ul>
         </div>
       </div>
       <div className={`modal-menu ${addChange ? "show" : ""}`}>
-        <div className="home">
-          <Link to="/">HOME</Link>
-          <a href="tel:+998975777728">T: +998 97 577 77 28</a>
+        <div className="modal-container">
+          <div className="home">
+            <Link to="/" onClick={showMenuOther}>
+              HOME
+            </Link>
+            <a href="tel:+998975777728">T: +998 97 577 77 28</a>
+          </div>
+          <div className="projects">
+            <Link to="/projects" onClick={showMenuPro}>
+              PROJECTS
+            </Link>
+          </div>
+          <div className="/about">
+            <Link to="about" onClick={showMenuPro}>
+              ABOUT
+            </Link>
+          </div>
+          <div className="contact">
+            <Link to="/contact" onClick={showMenuOther}>
+              CONTACT
+            </Link>
+            <a href="mailto:xushnud122997@gmail.com">xushnud122997@gmail.com</a>
+          </div>
         </div>
-        <div className="projects">
-          <Link to="/projects">PROJECTS</Link>
-        </div>
-        <div className="/about">
-          <Link to="about">ABOUT</Link>
-        </div>
-        <div className="contact">
-          <Link to="/contact">CONTACT</Link>
-          <a href="mailto:xushnud122997@gmail.com">xushnud122997@gmail.com</a>
-        </div>
+        <div className="modal-circle"></div>
+      </div>
+      <div className={`request-modal ${showRequest ? "show" : ""}`}>
+        <TfiClose onClick={hideRequestFunc} />
+        <h2>MAKE REQUEST</h2>
+        <form>
+          <input type="text" name="name" id="name" placeholder="Name" />
+          <br />
+          <input type="text" name="phone" id="phone" placeholder="Phone" />
+          <br />
+          <input type="email" name="email" id="email" placeholder="E-mail" />
+          <br />
+          <textarea
+            name="comment"
+            id="comment"
+            cols="30"
+            rows="2"
+            placeholder="Your comment"
+          ></textarea>
+          <br />
+          <button>SEND</button>
+        </form>
       </div>
     </div>
   );
