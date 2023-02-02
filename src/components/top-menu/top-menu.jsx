@@ -1,33 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import RequestModal from "../request-modal/RequestModal";
+
 import "./top-menu.scss";
 import { BsInstagram, BsFacebook } from "react-icons/bs";
-import { TfiClose } from "react-icons/tfi";
 
 const TopMenu = () => {
   const [lanEng, setEng] = useState(true);
   const [lanRus, setRus] = useState(false);
   const [lanAu, setAu] = useState(false);
+  const [addChange, setChange] = useState(false);
+  const [addColor, setColor] = useState(false);
+  const [showRequest, setShowRequest] = useState(false);
 
   const changeEng = () => {
     setEng(true);
     setRus(false);
     setAu(false);
   };
+
   const changeRus = () => {
     setRus(true);
     setEng(false);
     setAu(false);
   };
+
   const changeAu = () => {
     setAu(true);
     setEng(false);
     setRus(false);
   };
-
-  const [addChange, setChange] = useState(false);
-  const [addColor, setColor] = useState(false);
 
   const showMenu = () => {
     setChange(!addChange);
@@ -43,15 +46,13 @@ const TopMenu = () => {
     setColor(true);
   };
 
-  const [showRequest, setShowRequest] = useState(false);
-
-  const showRequestFunc = () => {
+  const toggleRequest = () => {
     setShowRequest(!showRequest);
   };
 
-  const hideRequestFunc = () => {
-    setShowRequest(!showRequest);
-  };
+  // const hideRequestFunc = () => {
+  //   setShowRequest(!showRequest);
+  // };
 
   return (
     <div className="top-menu">
@@ -101,7 +102,7 @@ const TopMenu = () => {
               </div>
             </li>
             <li>
-              <p onClick={showRequestFunc}>DROP REQUEST</p>
+              <p onClick={toggleRequest}>DROP REQUEST</p>
             </li>
           </ul>
         </div>
@@ -133,27 +134,7 @@ const TopMenu = () => {
         </div>
         <div className="modal-circle"></div>
       </div>
-      <div className={`request-modal ${showRequest ? "show" : ""}`}>
-        <TfiClose onClick={hideRequestFunc} />
-        <h2>MAKE REQUEST</h2>
-        <form>
-          <input type="text" name="name" id="name" placeholder="Name" />
-          <br />
-          <input type="text" name="phone" id="phone" placeholder="Phone" />
-          <br />
-          <input type="email" name="email" id="email" placeholder="E-mail" />
-          <br />
-          <textarea
-            name="comment"
-            id="comment"
-            cols="30"
-            rows="2"
-            placeholder="Your comment"
-          ></textarea>
-          <br />
-          <button>SEND</button>
-        </form>
-      </div>
+      <RequestModal toggleRequest={toggleRequest} showRequest={showRequest} />
     </div>
   );
 };

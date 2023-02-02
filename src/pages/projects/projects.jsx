@@ -1,11 +1,17 @@
-import React from "react";
-import TopMenu from "../../components/top-menu/top-menu";
+import React, { useState } from "react";
+import RequestModal from "../../components/request-modal/RequestModal";
 
 import { projects } from "./project.data";
 
 import "./projects.scss";
 
 const Projects = () => {
+  const [showRequest, setShowRequest] = useState(false);
+
+  const toggleRequest = () => {
+    setShowRequest(!showRequest);
+  };
+
   return (
     <div className="projects-page">
       <p>OUR PROJECTS</p>
@@ -40,10 +46,7 @@ const Projects = () => {
         <p>
           HAVE AN IDEA? <br /> TELL US
         </p>
-        <div
-          className="request"
-          onClick={() => <TopMenu show_request={true} />}
-        >
+        <div className="request" onClick={toggleRequest}>
           DROP REQUEST
         </div>
       </div>
@@ -51,6 +54,7 @@ const Projects = () => {
         <span>&copy; 2019. All rights reserved.</span>
         <span>Made by Khushnud Eshtemirov</span>
       </div>
+      <RequestModal toggleRequest={toggleRequest} showRequest={showRequest} />
     </div>
   );
 };

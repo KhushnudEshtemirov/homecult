@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import BtnSlider from "./btnSlider";
-import { slider_data } from "./slider.data";
+import RequestModal from "../../components/request-modal/RequestModal";
 
+import { slider_data } from "./slider.data";
 import { team_data } from "./team.data";
 
 import "./about.scss";
 
 const About = () => {
   const [slideIndex, setSlideIndex] = useState(1);
+  const [showRequest, setShowRequest] = useState(false);
+
+  const toggleRequest = () => {
+    setShowRequest(!showRequest);
+  };
 
   const nextSlide = () => {
     if (slideIndex !== slider_data.length) {
@@ -117,7 +123,7 @@ const About = () => {
                 </div>
               ))}
               <div className="join-team">
-                <p>
+                <p onClick={toggleRequest}>
                   JOIN <br /> THE TEAM
                 </p>
               </div>
@@ -137,7 +143,7 @@ const About = () => {
               HAVE AN IDEA? <br /> TELL US.
             </p>
             <div>
-              <span>DROP REQUEST</span>
+              <span onClick={toggleRequest}>DROP REQUEST</span>
             </div>
           </div>
         </div>
@@ -153,6 +159,7 @@ const About = () => {
         <div></div>
         <div></div>
       </div>
+      <RequestModal toggleRequest={toggleRequest} showRequest={showRequest} />
     </div>
   );
 };
